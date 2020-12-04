@@ -1,5 +1,9 @@
 package com.benjaminsimon.practice_app.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import java.time.Instant;
@@ -17,7 +21,9 @@ public class Comment {
     private Instant createdAt;
     private Instant updatedAt;
 
-    @ManyToOne(targetEntity = Post.class)
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JsonIgnore
+    @JoinColumn(name="postId")
     private Post post;
 
     public Long getId() {

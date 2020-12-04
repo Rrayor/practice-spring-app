@@ -7,6 +7,7 @@ import com.benjaminsimon.practice_app.model.Post;
 import com.benjaminsimon.practice_app.repository.PostRepository;
 import com.benjaminsimon.practice_app.service.CommentService;
 import com.benjaminsimon.practice_app.service.PostService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -17,6 +18,7 @@ import java.util.List;
 @RequestMapping("/api/comment")
 public class CommentController {
 
+    @Autowired
     private CommentService commentService;
 
     @PostMapping("/")
@@ -33,7 +35,7 @@ public class CommentController {
         return new ResponseEntity<>(comment, HttpStatus.OK);
     }
 
-    @GetMapping("/post/{id}")
+    @GetMapping("/post/{postId}")
     public ResponseEntity<List<Comment>> getCommentsForPost(@PathVariable Long postId) {
         List<Comment> comments = commentService.getCommentsByPostId(postId);
 
@@ -47,7 +49,7 @@ public class CommentController {
         return new ResponseEntity<>(comment, HttpStatus.OK);
     }
 
-    @DeleteMapping("/")
+    @DeleteMapping("/{id}")
     public ResponseEntity deleteComment(@PathVariable Long id) {
         commentService.deleteComment(id);
 

@@ -7,6 +7,7 @@ import com.benjaminsimon.practice_app.model.Comment;
 import com.benjaminsimon.practice_app.model.Post;
 import com.benjaminsimon.practice_app.repository.CommentRepository;
 import com.benjaminsimon.practice_app.repository.PostRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.Instant;
@@ -15,14 +16,14 @@ import java.util.List;
 @Service
 public class CommentService {
 
+    @Autowired
     private CommentRepository commentRepository;
+
+    @Autowired
     private PostRepository postRepository;
-    private PostService postService;
 
     public Comment createComment(CommentDto commentDto) {
-        Post post = postService.getPostById(commentDto.getPostId());
-
-        //Post post = getPost(commentDto.getPostId());
+        Post post = getPost(commentDto.getPostId());
         Comment comment = new Comment();
 
         comment.setContent(commentDto.getContent());

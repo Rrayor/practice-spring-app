@@ -1,5 +1,8 @@
 package com.benjaminsimon.practice_app.model;
 
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import java.time.Instant;
@@ -22,6 +25,9 @@ public class Post {
     private Instant createdAt;
     private Instant updatedAt;
 
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "post", cascade=CascadeType.REMOVE)
+    private List<Comment> comments;
+
     public Instant getCreatedAt() {
         return createdAt;
     }
@@ -37,9 +43,6 @@ public class Post {
     public void setUpdatedAt(Instant updatedAt) {
         this.updatedAt = updatedAt;
     }
-
-    @OneToMany(targetEntity = Comment.class)
-    List<Comment> comments;
 
     public Long getId() {
         return id;
